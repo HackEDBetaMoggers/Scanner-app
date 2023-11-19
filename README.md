@@ -2,6 +2,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+To install, first run npm install --force. Then, do the following,
+
 First, run the development server:
 
 ```bash
