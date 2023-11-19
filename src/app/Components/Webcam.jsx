@@ -20,8 +20,8 @@ const CustomWebcam = () => {
 
       else {
         console.log("sucess")
-        axios.post("/process", {
-          image_as_str: image
+        axios.post("http://localhost:5000/process", {
+          image: image
         })
       }
     }
@@ -52,6 +52,14 @@ const CustomWebcam = () => {
         }}
       >
         Take photo
+      </button>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded items-center my-10"
+        onClick={() => {
+          camera.current.switchCamera()
+        }}
+      >
+        Switch camera
       </button>
       <img style={{ width: "25%", margin: "auto" }} src={image}/>
       
