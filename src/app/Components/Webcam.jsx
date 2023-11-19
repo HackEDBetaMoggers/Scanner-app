@@ -51,8 +51,10 @@ const CustomWebcam = () => {
         Take photo
       </button>
 
+      {!image && <h2>Please take a photo of your receipt</h2>}
+      <img style={{ width: "25%", margin: "auto" }} src={image}/>
+
         
-      <img style={{ width: "25%", margin: "auto" }} src={image} alt="Taken photo" />
 
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded items-center my-10"
