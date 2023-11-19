@@ -11,25 +11,29 @@ const CustomWebcam = () => {
   const [numberOfCameras, setNumberOfCameras] = useState(0);
   const [image, setImage] = useState(null);
 
-    const image_rendering = () => {
-        if (image) {
-            <img style={{ width: "25%", margin: "auto" }} src={image} alt="Taken photo" />
-        }
-
-        else {
-            <h2>No image taken</h2>
-        }
-    }
-
     // Posts data
     const post_data = () => {
-      axios.post("/user", {
-        photo: image
-      })
+      if (image == null) {
+        console.log("Test")
+        return "Please take a photo of receipt before submitting"
+      }
+
+      else {
+        console.log("sucess")
+        axios.post("/process", {
+          image_as_str: image
+        })
+      }
+    }
+
+    // Fetch receipt data
+    async function fetch_data() {
+      const res = await axios.get("/process")
+      console.log(res)
     }
 
   return (
-    <div className="text-center">
+    <div className="text-center text-black">
       <div style={{ width: "25%", margin: "auto" }}>
         {/* Adjust the width and height styles to set the camera size */}
         <Camera
@@ -39,7 +43,6 @@ const CustomWebcam = () => {
           aspectRatio={1} // Set to 1 for a square aspect ratio (width = height)
         />
       </div>
-
       
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded items-center my-10"
@@ -50,32 +53,19 @@ const CustomWebcam = () => {
       >
         Take photo
       </button>
-
-      {!image && <h2>Please take a photo of your receipt</h2>}
       <img style={{ width: "25%", margin: "auto" }} src={image}/>
-
-        
-
+      
+      
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded items-center my-10"
         onClick={() => {
-          axios.post("/process", {
-            // photo: image
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        
+          post_data()
         }}
       >
-        Fetch Data
-      </button>
+        Post Receipt
 
-      
-      <p></p>
+      </button>
+      <br/>
 
     </div>
   );
