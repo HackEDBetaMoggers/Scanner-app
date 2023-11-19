@@ -14,8 +14,9 @@ const UploadButton = ({ setImage }) => {
 }
 
   return (
-    <React.Fragment>  
+    <div>
       <input
+      className="pl-32"
         type="file"
         name="myImage"
         onChange={(event) => {
@@ -25,7 +26,7 @@ const UploadButton = ({ setImage }) => {
           });
         }}
       />
-    </React.Fragment>    
+    </div>
   );
 };
 

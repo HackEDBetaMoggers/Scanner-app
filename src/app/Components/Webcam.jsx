@@ -1,13 +1,16 @@
 "use client"
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Camera } from "react-camera-pro";
 import axios from "axios";
 import UploadButton from "./UploadButton";
+import ReceiptTable from "./ReceiptTable";
+
 
 const CustomWebcam = () => {
   const camera = useRef(null);
   const [numberOfCameras, setNumberOfCameras] = useState(0);
   const [image, setImage] = useState(null);
+  const [new_data, setNew_data] = useState({})
 
     // Posts data
     const post_data = () => {
@@ -22,6 +25,7 @@ const CustomWebcam = () => {
         })
         response.then(function(result) {
           alert(JSON.stringify(result.data,null,2))
+          setNew_data(result.data)
         })
       }
     }
@@ -38,9 +42,12 @@ const CustomWebcam = () => {
         />
       </div>
       
+      <h4 className="my-10">or upload an image of a receipt here</h4>
       <UploadButton setImage={setImage}></UploadButton>
+      
+      <br/>
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded items-center my-10"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded items-center my-10 mx-5 "
         onClick={() => {
           const photo = camera.current.takePhoto();
           setImage(photo);
@@ -49,12 +56,12 @@ const CustomWebcam = () => {
         Take photo
       </button>
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded items-center my-10"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded items-center my-10 mx-5"
         onClick={() => {
           camera.current.switchCamera()
         }}
       >
-        Switch camera
+        Flip camera
       </button>
       <img style={{ width: "25%", margin: "auto" }} src={image}/>
       
@@ -68,6 +75,8 @@ const CustomWebcam = () => {
         Post Receipt
 
       </button>
+
+      <ReceiptTable data={new_data} />
       <br/>
     </div>
   );
