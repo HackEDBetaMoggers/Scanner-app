@@ -1,10 +1,8 @@
-
-
-
 "use client"
 import React, { useState, useRef } from "react";
 import { Camera } from "react-camera-pro";
 import axios from "axios";
+import UploadButton from "./UploadButton";
 
 const CustomWebcam = () => {
   const camera = useRef(null);
@@ -19,17 +17,13 @@ const CustomWebcam = () => {
       }
 
       else {
-        console.log("sucess")
-        axios.post("http://localhost:5000/process", {
+        let response = axios.post("http://localhost:5000/process", {
           image: image
         })
+        response.then(function(result) {
+          alert(JSON.stringify(result.data,null,2))
+        })
       }
-    }
-
-    // Fetch receipt data
-    async function fetch_data() {
-      const res = await axios.get("/process")
-      console.log(res)
     }
 
   return (
@@ -44,6 +38,7 @@ const CustomWebcam = () => {
         />
       </div>
       
+      <UploadButton setImage={setImage}></UploadButton>
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded items-center my-10"
         onClick={() => {
@@ -74,7 +69,6 @@ const CustomWebcam = () => {
 
       </button>
       <br/>
-
     </div>
   );
 };
